@@ -1,0 +1,10 @@
+# 建立新项目时需要关注的配置文件
+project_name: grb_robot_demo # 项目名称和项目文件名称，根据具体项目修改
+project_location: ../ # ../ 代表机器人项目与GROS路径相同，如需修改，则需要项目所在的绝对路径，比如/home/david
+custmor_config: custmor_config # 不建议修改，客户定制文件夹
+readme_files: readme_files # 不建议修改，api的说明文件夹
+general_api_script: general_api_script # 不建议修改，通用api的说明文件夹
+special_api_script: special_api_script # 不建议修改，特殊api的说明文件夹
+application_manage: application_manage # 不建议修改，应用程序集中运行文件夹
+data_volumn: data_volumn # 不建议修改，项目所有的数据文件夹
+backup_master: backup_master # 不建议修改，项目主文件备份文件夹
