@@ -13,7 +13,7 @@ def search_function_class(script):
         if lstrip.startswith('def '):
             args = lstrip.split('(')[1].split(')')[0]
             func_name = lstrip.split('(')[0].split(' ')[1]
-            if not args.startswith('self,') and not func_name.startswith('_'):
+            if not args.startswith('self') and not func_name.startswith('_') and not args.startswith('cls'):
                 func_list.append(func_name)
 
         if lstrip.startswith('class '):
@@ -79,9 +79,6 @@ def collect_init_object(init_dir):
 # 重建单个文件夹的__init__.py文件
 def recreate_init_py(path):
     py_list, dir_list, init_py = get_dir_py(path)
-    # if init_py:
-    #     os.remove(os.path.join(path, '__init__.py'))
-    #     init_py = False
     
     messages = []
 
@@ -125,11 +122,25 @@ def recreate_project_init_py(path):
     for _dir in sorted_dir_list:
         recreate_init_py(_dir)
 
+# 选择需要管理的项目
+def select_managed_project():
+    project_list = []
+    for i, project_yml in enumerate(os.listdir('./project_infomation')):
+        project_name = project_yml.split('.')[0]
+        print(f'项目编号 {i} :   {project_name}')
+        project_list.append(os.path.join('./project_infomation', project_yml)) 
+    
+    n_ = input('\n请选择需要管理的项目编号：　')
+    return project_list[int(n_)]
+
+def init_py():
+    project_dir = os.getcwd()
+    recreate_project_init_py(project_dir)
+    print('当前目录下的软件包初始化完成...\n')
 
 if __name__ == "__main__":
-    opts = mmcv.load('./target_project_infomation.yml')
-    project_dir = opts.get('project_dir')
-    print('机器人项目的路径是：　', project_dir)
+    init_py()
 
-    recreate_project_init_py(project_dir)
-    print('机器人项目api标准化完成，进入您的项目中调整...')
+
+
+    

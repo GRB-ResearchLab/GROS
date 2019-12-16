@@ -1,9 +1,0 @@
-application_manage: /home/david/grb_robot_demo/application_manage
-backup_master: /home/david/grb_robot_demo/backup_master
-custmor_config: /home/david/grb_robot_demo/custmor_config
-data_volumn: /home/david/grb_robot_demo/data_volumn
-general_api_script: /home/david/grb_robot_demo/general_api_script
-project_dir: /home/david/grb_robot_demo
-project_name: grb_robot_demo
-readme_files: /home/david/grb_robot_demo/readme_files
-special_api_script: /home/david/grb_robot_demo/special_api_script

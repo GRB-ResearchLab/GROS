@@ -1,5 +1,4 @@
 import os
-from collections import ChainMap
 
 import mmcv
 
@@ -38,10 +37,23 @@ def marge_dict(default_dict, custmor_dict):
             default_dict[key] = custmor_dict[key]
     return default_dict
 
-if __name__ == "__main__":
-    opts = mmcv.load('./target_project_infomation.yml')
-    project_dir = opts.get('project_dir')
-    print('机器人项目的路径是：　', project_dir)
+# 选择需要管理的项目
+def select_managed_project():
+    project_list = []
+    for i, project_yml in enumerate(os.listdir('./project_infomation')):
+        project_name = project_yml.split('.')[0]
+        print(f'项目编号 {i} :   {project_name}')
+        project_list.append(os.path.join('./project_infomation', project_yml))
 
+    n_ = input('\n请选择需要管理的项目编号：　')
+    return project_list[int(n_)]
+
+
+def merge_yaml():
+    project_dir = os.getcwd()
     deploy_yaml = get_deploy_yaml(project_dir)
-    print('部署配置文件./deployment.yml 完成！')
+    print('部署配置文件 deployment.yml 完成！\n')
+
+
+if __name__ == "__main__":
+    merge_yaml()

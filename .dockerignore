@@ -1,3 +1,4 @@
+
 **/.classpath
 **/.dockerignore
 **/.env
@@ -24,3 +25,33 @@
 __pycache__
 LICENSE
 README.md
+
+.DS_Store
+node_modules
+/dist
+__pycache__
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+# setup files
+dist
+build
+*egg*
+PKG*
+*.txt

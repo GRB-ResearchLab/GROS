@@ -77,13 +77,6 @@ def collect_app_funcs(opts):
 def create_object_script(opts):
     file_path = os.path.join(opts.get('project_dir'), 'task_process.py')
 
-    if os.path.exists(file_path):
-        # backup_path = file_path = os.path.join(opts.get('project_dir'), f'backup_master/task_process.py')
-        # os.system(f'cp {file_path} {backup_path}')
-        os.remove(file_path)
-    with open(file_path, 'w') as f:
-        pass
-
     messages = []
     messages.append(f'from object import constant, ObjectManage\n')
 
@@ -101,23 +94,36 @@ def create_object_script(opts):
         strs = ','.join(value)
         messages.append(f'from {key} import {strs}\n')
 
-    messages.append('\n')
-    messages.append('import mmcv\n')
-    messages.append("constant = mmcv.load('deployment.yml')\n")
-    messages.append('\n')
-    messages.append('object = ObjectManage()\n')
-    messages.append('\n')
-    messages.append('\n')
-    messages.append('def task_start():\n')
-    messages.append('    pass\n')
-    messages.append('\n')
-    messages.append('\n')
+    if os.path.exists(file_path):
+        time_str = time.strftime('%Y%m%d_%H%M%S',time.localtime(time.time()))
+        backup_path = os.path.join(opts.get('project_dir'), f'backup_master/backup_{time_str}_task_process.py')
+        with open(file_path, 'r') as f:
+            text = f.readlines()
+        with open(backup_path, 'w') as f:
+            f.writelines(text)
+        text_ok = []
+        for ok in text:
+            if not ok.startswith('from '):
+                text_ok.append(ok)
+        messages.extend(text_ok)
+    else:  
+        messages.append('\n')
+        messages.append('import mmcv\n')
+        messages.append("constant = mmcv.load('deployment.yml')\n")
+        messages.append('\n')
+        messages.append('object = ObjectManage()\n')
+        messages.append('\n')
+        messages.append('\n')
+        messages.append('def task_start():\n')
+        messages.append('    pass\n')
+        messages.append('\n')
+        messages.append('\n')
 
-    messages.append('if __name__ == "__main__":\n')
-    messages.append('    print("constant: ", constant)\n')
-    messages.append('    print("object: ", object.__dict__)\n')
+        messages.append('if __name__ == "__main__":\n')
+        messages.append('    print("constant: ", constant)\n')
+        messages.append('    print("object: ", object.__dict__)\n')
 
-    with open(file_path, 'a') as f:
+    with open(file_path, 'w') as f:
         f.writelines(messages)
 
 # 创建入口程序文件
@@ -128,32 +134,56 @@ def create_enter_script(opts):
         script = f.readlines()
     func_list = search_function(script)
 
-    file_path = os.path.join(opts.get('project_dir'), 'main.py')
-    if os.path.exists(file_path):
-        # backup_path = file_path = os.path.join(opts.get('project_dir'), f'backup_{str(time.time())}_main.py')
-        # shutil.copyfile(file_path, backup_path)
-        os.remove(file_path)
-    with open(file_path, 'w') as f:
-        pass
-
     messages = []
-
     strs = ','.join(func_list)
     messages.append(f'from task_process import {strs}\n')
-    messages.append('\n\n')
-    messages.append('def main():\n')
-    messages.append('    pass\n')
-    messages.append('\n\n')
 
-    messages.append('if __name__ == "__main__":\n')
-    messages.append('    main()\n')
-    messages.append('\n')
+    file_path = os.path.join(opts.get('project_dir'), 'main.py')
+    if os.path.exists(file_path):
+        time_str = time.strftime('%Y%m%d_%H%M%S',time.localtime(time.time()))
+        backup_path = os.path.join(opts.get('project_dir'), f'backup_master/backup_{time_str}_main.py')
+        with open(file_path, 'r') as f:
+            text = f.readlines()
+        with open(backup_path, 'w') as f:
+            f.writelines(text)
+        text_ok = []
+        for ok in text:
+            if not ok.startswith('from '):
+                text_ok.append(ok)
+        messages.extend(text_ok)
+    else:
+        messages.append('\n\n')
+        messages.append('def main():\n')
+        messages.append('    pass\n')
+        messages.append('\n\n')
 
-    with open(file_path, 'a') as f:
+        messages.append('if __name__ == "__main__":\n')
+        messages.append('    main()\n')
+        messages.append('\n')
+
+    with open(file_path, 'w') as f:
         f.writelines(messages)
 
+# 选择需要管理的项目
+def select_managed_project():
+    project_list = []
+    for i, project_yml in enumerate(os.listdir('./project_infomation')):
+        project_name = project_yml.split('.')[0]
+        print(f'项目编号 {i} :   {project_name}')
+        project_list.append(os.path.join('./project_infomation', project_yml)) 
+    
+    n_ = input('\n请选择需要管理的项目编号：　')
+    return project_list[int(n_)]
 
-if __name__ == "__main__":
-    opts = mmcv.load('target_project_infomation.yml')
+def create_task():
+    project_path = os.getcwd()
+    project_yaml = f".{project_path.split('/')[-1]}.yml"
+    project_yaml_path = os.path.join(project_path, project_yaml)
+    opts = mmcv.load(project_yaml_path)
     create_object_script(opts)
     create_enter_script(opts)
+    print('task_process.py以及main.py文件创建完成...\n')
+
+if __name__ == "__main__":
+    create_task()
+    

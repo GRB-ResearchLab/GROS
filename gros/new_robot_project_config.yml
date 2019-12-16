@@ -1,0 +1,46 @@
+# 建立新项目时需要关注的配置文件
+
+# 主目录文件夹配置
+main_folder:
+  custmor_config: custmor_config # 不建议修改，客户定制文件夹
+  readme_files: readme_files # 不建议修改，api的说明文件夹
+  application_manage: application_manage # 不建议修改，应用程序集中运行文件夹
+  data_volumn: data_volumn # 不建议修改，项目所有的数据文件夹
+  backup_master: backup_master # 不建议修改，项目主文件备份文件夹
+  
+  special_api_script: special_api_script # 不建议修改，特殊api的说明文件夹
+  general_api_script: general_api_script # 不建议修改，通用api的说明文件夹
+  brain_api_script: brain_api_script # 不建议修改，大脑api的说明文件夹
+  cerebellum_api_script: cerebellum_api_script # 不建议修改，小脑api的说明文件夹
+
+# api文件夹配置
+api_folder:
+  # 特殊api的说明文件夹
+  special_api_script: 
+    - distinguish_chess # 识别象棋 
+    - distinguish_fruit # 识别水果 
+    - distinguish_gesture # 识别手势
+
+  # 通用api的说明文件夹
+  general_api_script: 
+    - inter_communication # 对内通信 
+    - exter_communication # 对外通信 
+    - HM_interactions # 人机交互
+    - power_management # 电源管理
+    - running_logger # 设备日志
+    
+  # 大脑api的说明文件夹
+  brain_api_script: 
+    - vision # 视觉
+    - voice # 语音
+    - language #　语言
+    - reasoning # 推理 
+    - touch # 触觉
+
+  # 小脑api的说明文件夹  
+  cerebellum_api_script: 
+    - motion # 运动
+    - perceive # 感知
+    - harmonize # 协调
+
+
