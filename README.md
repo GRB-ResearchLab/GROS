@@ -84,7 +84,7 @@
 ## 五、快速应用
 
 - 安装GROS
-  - git clone http://192.168.0.218:6080/grb/GROS
+  - git clone https://github.com/GRB-ResearchLab/GROS.git
   - cd GROS
   - pip install -r requirements.txt
   - python setup.py install
