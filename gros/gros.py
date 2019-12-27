@@ -34,14 +34,14 @@ def init():
 
 @click.command()
 def object():
-    '''创建object.py文件'''
-    print("创建机器人项目object.py文件\n")
+    '''创建机器人项目task_object.py文件'''
+    print("创建机器人项目task_object.py文件\n")
     create_object()
 
 
 @click.command()
-def task():
-    '''创建task_process.py以及main.py文件'''
+def process():
+    '''创建机器人项目task_process.py以及main.py文件'''
     print("创建机器人项目task_process.py以及main.py文件\n")
     create_task()
 
@@ -55,7 +55,7 @@ cli.add_command(create)
 cli.add_command(config)
 cli.add_command(init)
 cli.add_command(object)
-cli.add_command(task)
+cli.add_command(process)
 cli.add_command(grbt)
 
 if __name__ == "__main__":

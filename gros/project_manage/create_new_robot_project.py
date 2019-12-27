@@ -7,7 +7,7 @@ from .options import opts
 
 
 # 创建新的机器人项目
-def create_new_project(opts, path, project_name):
+def _create_new_project(opts, path, project_name):
     project_dir = os.path.join(path, project_name)
 
     message = [f'# {project_name} 项目信息\n']
@@ -91,7 +91,7 @@ def create_new_project(opts, path, project_name):
 
 def create_project(project_name):
     project_root = os.getcwd()
-    create_new_project(opts, project_root, project_name)
+    _create_new_project(opts, project_root, project_name)
     project_path = os.path.join(project_root, project_name)
     print(f'机器人项目创建完成，cd {project_name} 开始项目开发...\n')
 

@@ -8,7 +8,7 @@ lower = [*'abcdefghijklmnopqrstuvwxyz']
 obj = {upper[i]: f'_{lower[i]}' for i in range(len(lower))}
 
 # 搜集单个__init__.py文件的类名
-def collect_init_class(init_path):
+def _collect_init_class(init_path):
     class_list = []
     with open(init_path, 'r') as f:
         code = f.readlines()
@@ -21,7 +21,7 @@ def collect_init_class(init_path):
     return class_list
 
 # 搜集单个__init__.py文件的函数名
-def collect_init_function(init_path):
+def _collect_init_function(init_path):
     function_list = []
     with open(init_path, 'r') as f:
         code = f.readlines()
@@ -34,24 +34,23 @@ def collect_init_function(init_path):
     return function_list
 
 # 汇集api_script中的类
-def collect_api_class(opts):
+def _collect_api_class(opts):
     class_dict = {}
-    general_api_path = opts.get('general_api_script')
-    init_path = os.path.join(general_api_path, '__init__.py')
-    class_list = collect_init_class(init_path)
-    class_dict.update({'general_api_script': class_list})
+    api_list = ['general_api_script', 'special_api_script',
+                'brain_api_script', 'cerebellum_api_script']
 
-    general_api_path = opts.get('special_api_script')
-    init_path = os.path.join(general_api_path, '__init__.py')
-    class_list = collect_init_class(init_path)
-    class_dict.update({'special_api_script': class_list})
+    for item in api_list:
+        general_api_path = opts.get(item)
+        init_path = os.path.join(general_api_path, '__init__.py')
+        class_list = _collect_init_class(init_path)
+        class_dict.update({item: class_list})
 
     return class_dict
 
 # 创建对象管理文件
-def create_object_script(opts):
-    class_dict = collect_api_class(opts)
-    file_path = os.path.join(opts.get('project_dir'), 'object.py')
+def _create_object_script(opts):
+    class_dict = _collect_api_class(opts)
+    file_path = os.path.join(opts.get('project_dir'), 'task_object.py')
 
     messages = []
     object_list = []
@@ -82,14 +81,14 @@ def create_object_script(opts):
         messages.append('\n')
         messages.append('class ObjectManage:\n')
         for v in object_list:
-            messages.append(f'    {class_to_object_name(v)} = {v}()\n')
+            messages.append(f'    {_class_to_object_name(v)} = {v}(constant)\n')
         messages.append('    pass\n')
 
     with open(file_path, 'w') as f:
         f.writelines(messages)
 
 
-def class_to_object_name(class_name):
+def _class_to_object_name(class_name):
     list_ = []
     for m in [*class_name]:
         if m in upper:
@@ -100,7 +99,7 @@ def class_to_object_name(class_name):
     return name_str[1:]
 
 # 选择需要管理的项目
-def select_managed_project():
+def _select_managed_project():
     project_list = []
     for i, project_yml in enumerate(os.listdir('./project_infomation')):
         project_name = project_yml.split('.')[0]
@@ -115,8 +114,8 @@ def create_object():
     project_yaml = f".{project_path.split('/')[-1]}.yml"
     project_yaml_path = os.path.join(project_path, project_yaml)
     opts = mmcv.load(project_yaml_path)
-    create_object_script(opts)
-    print('object.py文件创建完成...\n')
+    _create_object_script(opts)
+    print('task_object.py文件创建完成...\n')
 
 if __name__ == "__main__":
     create_object()

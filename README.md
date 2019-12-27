@@ -76,7 +76,7 @@
     - harmonize # 协调
 
 - 主文件
-  - object.py 全局常量以及长期驻留对象管理
+  - task_object.py 全局常量以及长期驻留对象管理
   - task_process.py 任务流程管理
   - main.py 程序入口文件
 
@@ -84,9 +84,10 @@
 ## 五、快速应用
 
 - 安装GROS
-  - git clone https://github.com/GRB-ResearchLab/GROS.git
+  - git clone http://192.168.0.218:6080/grb/GROS
   - cd GROS
   - pip install -r requirements.txt
+  - pip uinstall gros
   - python setup.py install
   - 检查安装情况;
   ```
@@ -98,11 +99,11 @@
       --help  Show this message and exit.
 
     Commands:
-      config  生成机器人项目部署配置文件
-      create  创建新的机器人项目
-      init    初始化当前目录下的软件包
-      object  创建object.py文件
-      task    创建task_process.py以及main.py文件
+      config    生成机器人项目部署配置文件
+      create    创建新的机器人项目
+      init      初始化当前目录下的软件包
+      object    创建机器人项目task_object.py文件
+      process   创建机器人项目task_process.py以及main.py文件
   ```
 
 - 创建新的机器人项目
@@ -151,16 +152,16 @@
 
     ***欢迎使用通用机器人操作系统GROS***
 
-    创建机器人项目object.py文件
+    创建机器人项目task_object.py文件
 
-    object.py文件创建完成...
+    task_object.py文件创建完成...
 
   ```
 
 - 生成task_process.py文件以及main.py文件
 
   ```
-  $ gros task
+  $ gros process
 
     ***欢迎使用通用机器人操作系统GROS***
 
